@@ -1,0 +1,31 @@
+#lang racket
+
+; Actividad evaluada - Laboratorio 6
+; Calcula el interes de un deposito segun el porcentaje asignado por el banco.
+
+(define (tasa-interes deposito)
+  (cond
+    [(<= deposito 40000) 35/1000]
+    [(<= deposito 260000) 4/100]
+    [else 45/1000]))
+
+(define (interes-asignado deposito)
+  (* deposito (tasa-interes deposito)))
+
+(define deposito
+  (begin
+    (display "Ingrese el monto del deposito: $")
+    (string->number (read-line))))
+
+(if (and (rational? deposito) (>= deposito 0))
+    (begin
+      (printf "\nDeposito: $~a\n" deposito)
+      (printf "Tasa asignada: ~a%\n"
+              (exact->inexact (* (tasa-interes deposito) 100)))
+      (printf "Interes generado: $~a\n" (interes-asignado deposito)))
+    (displayln "Ingrese un monto numerico mayor o igual a cero."))
+
+; Ejemplos para probar las funciones:
+; (interes-asignado 30000)  -> 1050
+; (interes-asignado 50000)  -> 2000
+; (interes-asignado 300000) -> 13500
